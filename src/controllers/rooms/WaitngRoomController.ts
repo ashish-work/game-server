@@ -2,7 +2,6 @@ import { AbstractRouteController } from "../AbstractRouteController";
 import express = require("express")
 import { WaitingRoomRepo } from "../../repositories/WaitingRoom";
 import { StatusConstants } from "../../constants/StatusConstants";
-import db from "../../models";
 
 
 export class WaitingRoomController extends AbstractRouteController {
@@ -11,7 +10,12 @@ export class WaitingRoomController extends AbstractRouteController {
         super();
         this.path = '/waitingroom';
         this.InitializeController(link)
-        this.waitingRoomRepo = new WaitingRoomRepo(db)
+        this.waitingRoomRepo = new WaitingRoomRepo()
+    }
+
+    public init() {
+        // A temporary method to create a room 
+        this.waitingRoomRepo.create()
     }
 
     public async runService(req: express.Request, resp: express.Response): Promise<any> {
