@@ -1,15 +1,15 @@
-import {Model, ModelStatic, Sequelize} from "sequelize";
-const sequelize = new Sequelize("sqlite::memory:");
-import {WaitingRoomModel} from "./WaitingRoom.model"
+// import {Model, ModelStatic, Sequelize} from "sequelize";
+import {Sequelize} from 'sequelize-typescript';
+export const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: ':memory:',
+    models: [__dirname + '/**/*.model.ts'], // or [Player, Team],
+  });
 
-export type DatabaseType = {
-    sequelize: Sequelize,
-    WaitingRoom: ModelStatic<Model>
-}
+// const db:DatabaseType = {
+//     sequelize: sequelize,
+//     WaitingRoom: WaitingRoom Model,
+//     GameRoom: GameRoomModel,
+//     GameState: GameStateModel,
+// }
 
-const db:DatabaseType = {
-    sequelize: sequelize,
-    WaitingRoom: WaitingRoomModel.getModelInstance(sequelize).model
-}
-
-export default db

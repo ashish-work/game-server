@@ -1,31 +1,17 @@
-import { Model, ModelStatic, Sequelize, DataTypes } from "sequelize";
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { GameConstants } from '../constants/GameConstants';
 
 
-export class WaitingRoomModel {
 
-    public model:ModelStatic<Model>
-    private static instance: WaitingRoomModel
-    public static modelName: string = "WaitingRoom"
-
-    private constructor(sequilizer:Sequelize){
-        this.model = sequilizer.define(WaitingRoomModel.modelName, {
-            id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                autoIncrement: true,
-                primaryKey: true
-            },
-            slot_in_secs: {
-                type: DataTypes.INTEGER,
-                allowNull: true
-            }
-        })
-    }
-    public static getModelInstance(sequilizer:Sequelize){
-        if(!WaitingRoomModel.instance){
-            WaitingRoomModel.instance = new WaitingRoomModel(sequilizer)
-        }
-
-        return WaitingRoomModel.instance
-    }
+@Table
+class WaitingRoomModel extends Model {
+    @Column({
+        type:DataType.INTEGER,
+        defaultValue: GameConstants.WAITING_ROOM_TIMER_IN_SECS
+    })
+    slotInSecs!:number
 }
+
+
+export default WaitingRoomModel
+
